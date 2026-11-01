@@ -51,3 +51,32 @@ export interface EngineStats {
   totalQueriesProcessed: number;
   successRate: number;
 }
+
+export interface UserSettings {
+  theme?: "light" | "dark" | "system";
+  emailNotifications?: boolean;
+  defaultEngineMode?: "offline" | "ipc" | "http";
+  resultsPerPage?: number;
+  enableTelemetry?: boolean;
+}
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  avatarUrl?: string;
+  role?: string;
+  organization?: string;
+  createdAt?: string;
+  settings?: UserSettings;
+}
+
+export interface AuthContextType {
+  user: User | null;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  login: (email: string, password?: string, name?: string) => Promise<{ success: boolean; error?: string }>;
+  signup: (name: string, email: string, password?: string) => Promise<{ success: boolean; error?: string }>;
+  logout: () => void;
+  updateProfile: (updates: Partial<User>) => Promise<{ success: boolean; error?: string }>;
+}

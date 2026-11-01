@@ -19,6 +19,7 @@ import { sampleDocuments } from "@/lib/mock-data";
 import { SearchResult } from "@/lib/types";
 import { DocumentPreviewModal } from "./DocumentPreviewModal";
 import { PageView } from "./Navbar";
+import { UserProfileMenu } from "./UserProfileMenu";
 
 interface SearchResultsViewProps {
   initialQuery: string;
@@ -168,6 +169,7 @@ export const SearchResultsView: React.FC<SearchResultsViewProps> = ({
           >
             Dashboard
           </button>
+          <UserProfileMenu setCurrentView={setCurrentView} />
         </div>
       </div>
 

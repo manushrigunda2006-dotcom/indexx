@@ -15,6 +15,7 @@ import {
   ShieldCheck,
   CheckCircle,
 } from "lucide-react";
+import { UserProfileMenu } from "./UserProfileMenu";
 
 export type PageView =
   | "home"
@@ -37,7 +38,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   setCurrentView,
   showLogo = true,
 }) => {
-  const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showAppsMenu, setShowAppsMenu] = useState(false);
 
   const navLinks = [
@@ -105,7 +105,6 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             onClick={() => {
               setShowAppsMenu(!showAppsMenu);
-              setShowProfileMenu(false);
             }}
             title="IndexX Modules & Apps"
             className="p-2 rounded-full text-gray-600 hover:bg-gray-100 transition"
@@ -144,58 +143,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           )}
         </div>
 
-        {/* User Profile Avatar */}
-        <div className="relative">
-          <button
-            onClick={() => {
-              setShowProfileMenu(!showProfileMenu);
-              setShowAppsMenu(false);
-            }}
-            title="User Profile & Settings"
-            className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-semibold text-xs shadow-sm hover:ring-2 hover:ring-blue-200 transition"
-          >
-            SD
-          </button>
-
-          {showProfileMenu && (
-            <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 p-4 z-50 animate-in fade-in zoom-in-95 text-xs text-gray-700 space-y-3">
-              <div className="flex items-center gap-3 pb-3 border-b border-gray-100">
-                <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
-                  SD
-                </div>
-                <div>
-                  <div className="font-semibold text-gray-900">Speed Demon Judge</div>
-                  <div className="text-gray-500 text-[11px]">evaluator@track-b.org</div>
-                </div>
-              </div>
-
-              <div className="space-y-1.5 text-gray-600">
-                <div className="flex items-center justify-between text-[11px]">
-                  <span>Engine Connection:</span>
-                  <span className="text-emerald-600 font-semibold flex items-center gap-1">
-                    <CheckCircle className="w-3 h-3" /> Offline Harness
-                  </span>
-                </div>
-                <div className="flex items-center justify-between text-[11px]">
-                  <span>Corpus Target:</span>
-                  <span className="font-mono text-gray-800">250 MB / 50k queries</span>
-                </div>
-              </div>
-
-              <div className="pt-2 border-t border-gray-100">
-                <button
-                  onClick={() => {
-                    setCurrentView("benchmark");
-                    setShowProfileMenu(false);
-                  }}
-                  className="w-full text-center py-1.5 rounded-lg bg-gray-50 hover:bg-gray-100 font-medium text-gray-700 transition"
-                >
-                  Manage Benchmark Lab
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
+        {/* User Profile / Account Menu */}
+        <UserProfileMenu setCurrentView={setCurrentView} />
       </div>
     </header>
   );
