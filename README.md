@@ -2,7 +2,8 @@
 
 > **Competition:** Speed Demon 72-Hour Hackathon  
 > **Track:** Track B – Index (Search Indexing)  
-> **Architecture:** Decoupled C++20 Search Engine + Modern Next.js Minimalist Search Platform
+> **Architecture:** Decoupled C++20 Search Engine + Modern Next.js Minimalist Search Platform  
+> **Live Demo:** https://in-dexx.vercel.app
 
 ---
 
