@@ -22,6 +22,43 @@ interface UserProfileMenuProps {
   className?: string;
 }
 
+const UserAvatar: React.FC<{
+  user: { name: string; avatarUrl?: string };
+  size?: "sm" | "md" | "lg";
+  className?: string;
+}> = ({ user, size = "sm", className = "" }) => {
+  const [imageError, setImageError] = useState(false);
+
+  useEffect(() => {
+    setImageError(false);
+  }, [user.avatarUrl]);
+
+  const sizeClasses = {
+    sm: "w-8 h-8 text-xs",
+    md: "w-11 h-11 text-sm",
+    lg: "w-16 h-16 text-xl",
+  }[size];
+
+  if (user.avatarUrl && !imageError) {
+    return (
+      <img
+        src={user.avatarUrl}
+        alt={user.name}
+        onError={() => setImageError(true)}
+        className={`${sizeClasses} rounded-full object-cover shrink-0 ${className}`}
+      />
+    );
+  }
+
+  return (
+    <div
+      className={`${sizeClasses} rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold tracking-wider shrink-0 select-none shadow-xs ${className}`}
+    >
+      {getInitials(user.name)}
+    </div>
+  );
+};
+
 export const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
   setCurrentView,
   className = "",
@@ -33,18 +70,26 @@ export const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdown on click outside
+  // Close dropdown on click outside or Escape key
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("keydown", handleKeyDown);
     }
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen]);
 
@@ -72,46 +117,24 @@ export const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
   // Authenticated State: Dynamic Avatar & Account Dropdown Menu
   return (
     <div ref={menuRef} className={`relative ${className}`}>
-      {/* Trigger Button: User Avatar */}
+      {/* Trigger Button: Dynamic User Avatar */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         title={`${user.name} (${user.email})`}
         aria-label="User Account Menu"
-        className="w-8 h-8 rounded-full overflow-hidden text-white flex items-center justify-center font-semibold text-xs shadow-sm hover:ring-2 hover:ring-blue-300 focus:outline-none transition shrink-0"
+        aria-expanded={isOpen}
+        aria-haspopup="true"
+        className="rounded-full overflow-hidden text-white flex items-center justify-center font-semibold text-xs shadow-sm hover:ring-2 hover:ring-blue-300 focus:outline-none transition shrink-0"
       >
-        {user.avatarUrl ? (
-          <img
-            src={user.avatarUrl}
-            alt={user.name}
-            className="w-full h-full object-cover"
-            onError={(e) => {
-              // Fallback to initials if image fails
-              (e.target as HTMLElement).style.display = "none";
-            }}
-          />
-        ) : (
-          <div className="w-full h-full bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center font-bold text-xs tracking-wider">
-            {getInitials(user.name)}
-          </div>
-        )}
+        <UserAvatar user={user} size="sm" />
       </button>
 
       {/* Account Dropdown Menu */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-72 sm:w-80 bg-white rounded-2xl shadow-xl border border-gray-100 p-4 z-50 animate-in fade-in zoom-in-95 text-xs text-gray-700 space-y-3.5">
+        <div className="absolute right-0 mt-2 w-72 sm:w-80 max-w-[calc(100vw-2rem)] bg-white rounded-2xl shadow-xl border border-gray-100 p-4 z-50 animate-in fade-in zoom-in-95 text-xs text-gray-700 space-y-3.5">
           {/* User Profile Card Header */}
           <div className="flex items-center gap-3 pb-3 border-b border-gray-100">
-            {user.avatarUrl ? (
-              <img
-                src={user.avatarUrl}
-                alt={user.name}
-                className="w-11 h-11 rounded-full object-cover ring-2 ring-blue-100 shrink-0"
-              />
-            ) : (
-              <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-sm shrink-0">
-                {getInitials(user.name)}
-              </div>
-            )}
+            <UserAvatar user={user} size="md" className="ring-2 ring-blue-100" />
             <div className="min-w-0 flex-1">
               <div className="font-semibold text-gray-900 text-sm truncate">
                 {user.name}

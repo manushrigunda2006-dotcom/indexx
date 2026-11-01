@@ -201,7 +201,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             <ArrowRight className="w-4 h-4" />
           </button>
 
-          {/* Quick Demo Option for Evaluators */}
+          {/* Quick Demo Option */}
           <div className="pt-2 border-t border-gray-100 flex flex-col gap-2">
             <button
               type="button"

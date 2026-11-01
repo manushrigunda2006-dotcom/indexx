@@ -33,7 +33,7 @@ The user requested a complete visual redesign of the IndexX web platform from th
 4. **Dedicated Subpage Navigation (`Navbar.tsx`):**
    - Simple top navigation with links to Dashboard, Query Playground, Index Explorer, Benchmark Lab, AI Assistant, and Docs.
    - Google-style 9-dot App Grid dropdown for quick access to all modules.
-   - User profile avatar with evaluator status and offline harness indicators.
+   - User profile avatar with dynamic authentication status and offline harness indicators.
 
 5. **Separation of Concerns:**
    - C++ search engine remains decoupled.
