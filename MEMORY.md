@@ -4,9 +4,10 @@
 > **Tagline:** *Search Beyond Limits.*  
 > **Competition:** Speed Demon 72-Hour Hackathon  
 > **Selected Track:** Track B – Index (Search Indexing)  
+> **Repository:** https://github.com/manushrigunda2006-dotcom/indexx  
 > **Role:** Senior Software Architect, Full-Stack Developer, UI/UX Designer, Performance Engineering Specialist  
 > **Last Updated:** 2026-11-01  
-> **Status:** Phase 1 – Architecture & Memory Setup Active
+> **Status:** Scaffolding & Minimalist Search Web UI Complete, Live & Pushed to GitHub
 
 ---
 
